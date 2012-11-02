@@ -1,0 +1,115 @@
+<div class="dbx-group" id="sidebar" style="position: relative; display: block; ">
+
+	<!--sidebox start -->
+  	<div id="theme-switcher" class="dbx-box widget_themeswitcher dbx-box-open dbxid0" style="position: relative; display: block; ">
+	  	<h3 class="dbx-handle dbx-handle-cursor" style="position: relative; display: block; " title="click-down and drag to move this box">Announcement<a style="cursor: pointer; " href="javascript:void(null)" class="dbx-toggle dbx-toggle-open" title="click to close this box">&nbsp;</a></h3>
+	  	<div class="dbx-content">
+	  		<ul id="themeswitcher">
+	       		<li><a href="http://www.ndesign-studio.com/demo/wordpress/index.php?wptheme=GlossyBlue">GlossyBlue</a></li>
+	       		<li><a href="http://www.ndesign-studio.com/demo/wordpress/index.php?wptheme=Koi">Koi</a></li>
+	       		<li><a href="http://www.ndesign-studio.com/demo/wordpress/index.php?wptheme=Notepad">Notepad</a></li>
+			</ul>
+		</div>
+	</div><!--sidebox end -->
+	<!--sidebox start -->
+	<!-- div id="text-3" class="dbx-box widget_text dbx-box-open dbxid1" style="position: relative; display: block; ">
+		<h3 class="dbx-handle dbx-handle-cursor" style="position: relative; display: block; " title="click-down and drag to move this box">About the Author<a style="cursor: pointer; " href="javascript:void(null)" class="dbx-toggle dbx-toggle-open" title="click to close this box">&nbsp;</a></h3>
+		<div class="dbx-content">
+			<div class="textwidget">
+				{%include "about.html"%}
+			</div>
+		</div>
+	</div><!--sidebox end -->
+
+	<!--sidebox start -->
+	<div id="recent-posts-3" class="dbx-box widget_recent_entries dbx-box-open dbxid3" style="position: relative; display: block; ">
+		<h3 class="dbx-handle dbx-handle-cursor" style="position: relative; display: block; " title="click-down and drag to move this box">Popular Articles<a style="cursor: pointer; " href="javascript:void(null)" class="dbx-toggle dbx-toggle-open" title="click to close this box">&nbsp;</a></h3>
+		<div class="dbx-content">
+			<ul>
+				{% for entry in blog.hotposts %}
+					<li  class="cat-item"  ><a href="/{{entry.link}}">{{entry.title}} [{{entry.readtimes}}]</a> </li>
+				{%endfor%}
+			</ul>
+		</div>
+	</div><!--sidebox end -->
+
+	<!--sidebox start -->
+	<div id="recent-posts-3" class="dbx-box widget_recent_entries dbx-box-open dbxid3" style="position: relative; display: block; ">
+		<h3 class="dbx-handle dbx-handle-cursor" style="position: relative; display: block; " title="click-down and drag to move this box">Article Categories<a style="cursor: pointer; " href="javascript:void(null)" class="dbx-toggle dbx-toggle-open" title="click to close this box">&nbsp;</a></h3>
+		<div class="dbx-content">
+			<ul>
+		    	{%for cate in categories%}
+		      		<li class="cat-item" ><a href="/category/{{cate.slug}}">{{cate.name}}({{cate.count}})</a></li>
+		      	{%endfor%}
+			</ul>
+		</div>
+	</div><!--sidebox end -->
+
+	<!--sidebox start -->
+	<div id="recent-posts-3" class="dbx-box widget_recent_entries dbx-box-open dbxid3" style="position: relative; display: block; ">
+		<h3 class="dbx-handle dbx-handle-cursor" style="position: relative; display: block; " title="click-down and drag to move this box">Tag Cloud<a style="cursor: pointer; " href="javascript:void(null)" class="dbx-toggle dbx-toggle-open" title="click to close this box">&nbsp;</a></h3>
+		<div class="dbx-content">
+			<ul>
+				{% for t in alltags %}
+					<a title="{{ t.tagcount }} pages" href="/tag/{{t.tag|urlencode}}"><span style='font-size:{{ t.tagcount|add:9 }}px;'>{{t.tag}}</span></a>
+				{%endfor%}
+			</ul>
+		</div>
+	</div><!--sidebox end -->
+
+	<!--sidebox start -->
+	<div id="recent-posts-3" class="dbx-box widget_recent_entries dbx-box-open dbxid3" style="position: relative; display: block; ">
+		<h3 class="dbx-handle dbx-handle-cursor" style="position: relative; display: block; " title="click-down and drag to move this box">File<a style="cursor: pointer; " href="javascript:void(null)" class="dbx-toggle dbx-toggle-open" title="click to close this box">&nbsp;</a></h3>
+		<div class="dbx-content">
+			<ul>
+				{%for archive in archives%}
+				<li><a href="/{{archive.year}}/{{archive.month}}">{{archive.year}}.{{archive.month}}.({{archive.entrycount}})</a></li>
+				{%endfor%}
+			</ul>
+		</div>
+	</div><!--sidebox end -->
+	
+	<!--sidebox start -->
+	<div id="recent-posts-3" class="dbx-box widget_recent_entries dbx-box-open dbxid3" style="position: relative; display: block; ">
+		<h3 class="dbx-handle dbx-handle-cursor" style="position: relative; display: block; " title="click-down and drag to move this box">Links<a style="cursor: pointer; " href="javascript:void(null)" class="dbx-toggle dbx-toggle-open" title="click to close this box">&nbsp;</a></h3>
+		<div class="dbx-content">
+			<ul>
+		        {%for link in blogroll%}
+		        	<li class="cat-item " ><a href="{{link.href}}" target="_blank">{{link.linktext}}</a></li>
+		        {%endfor%}
+			</ul>
+		</div>
+	</div><!--sidebox end -->
+	
+	<!--sidebox start -->
+	<div id="recent-comments-3" class="dbx-box widget_recent_comments dbx-box-open dbxid4" style="position: relative; display: block; ">
+		<h3 class="dbx-handle dbx-handle-cursor" style="position: relative; display: block; " title="click-down and drag to move this box">Recently reviewed<a style="cursor: pointer; " href="javascript:void(null)" class="dbx-toggle dbx-toggle-open" title="click to close this box">&nbsp;</a></h3>
+		<div class="dbx-content">
+			<ul id="recentcomments">
+				{% for comment in recent_comments %}
+					<li class="submenu" ><a href="/{{comment.entry.link}}#comment-{{comment.key.id}}">{{comment.author}}: {{comment.shortcontent|escape}}...</a></li>
+				{%endfor%}
+			</ul>
+		</div>
+	</div><!--sidebox end -->
+	<!--sidebox start -->
+	<div id="rss-3" class="dbx-box widget_rss dbx-box-open dbxid5" style="position: relative; display: block; ">
+		<h3 class="dbx-handle dbx-handle-cursor" style="position: relative; display: block; " title="click-down and drag to move this box">
+			<a class="rsswidget" href="{{blog.baseurl}}" title="订阅本站"><img style="background:orange;color:white;border:none;" width="14" height="14" src="http://www.ndesign-studio.com/demo/wordpress/wp-includes/images/rss.png" alt="RSS"></a> 
+			<a class="rsswidget" href="{{blog.baseurl}}" title="订阅本站">Subscribe to this site</a>
+			<a style="cursor: pointer; " href="javascript:void(null)" class="dbx-toggle dbx-toggle-open" title="click to close this box">&nbsp;</a>
+		</h3>
+		<div class="dbx-content">
+			<ul>
+		    	<li><a href="{{blog.baseurl}}/feed" target="_blank">Subscribe to Posts</a></li>
+		        <li><a href="{{blog.baseurl}}/feed/comments" target="_blank">Subscribe to comments</a></li>
+                <li><a href="http://www.google.com/reader/preview/*/feed/{{blog.feedurl}}" target="_blank">Subscribe to <strong>Google Reader</strong></a></li>
+                <li><a href="http://www.zhuaxia.com/add_channel.php?url={{blog.feedurl}}" target="_blank">Subscribe to <strong>Catch shrimp</strong></a></li>
+	            <li><a href="http://www.xianguo.com/subscribe.php?url={{blog.feedurl}}" target="_blank">Subscribe to <strong>Fresh fruit</strong></a></li>
+	            <li><a href="http://mail.qq.com/cgi-bin/feed?u={{blog.feedurl}}" target="_blank">Subscribe to <strong>QQ</strong></a></li>
+			</ul>
+		</div>
+	</div>
+	<!--sidebox end -->
+	<span class="dbx-box dbx-dummy dbx-offdummy" style="display: block; width: 0px; height: 0px; overflow-x: hidden; overflow-y: hidden; "></span>
+</div>

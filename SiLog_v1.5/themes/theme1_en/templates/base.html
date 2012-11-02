@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+{%mf head%}
+<title>{% block title %} {{ blog.title|escape}}{% endblock %}</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="alternate" type="application/rss+xml" title="{{ blog.title|escape }} RSS Feed" href="{{ blog.feedurl }}" />
+<link href="/themes/{{ blog.theme_name }}/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+{%endmf%}
+</head>
+
+<body>
+<!-- Begin #wrapper -->
+<div id="wrapper">
+	<!-- Begin #header -->
+	<div id="header">
+		<!-- div id="logo"><a href="/"><img src="/themes/{{ blog.theme_name }}/images/logo.png" alt="{{ blog.title|escape}}" /></a><br /><span>{{ blog.subtitle|escape}}</span></div-->
+		<!-- Begin #topMenu -->
+        <div id="topmenu" class="catemenu">
+		{% if categories %}<ul>{%for cate in categories%}<li><a href="/category/{{cate.slug}}">{{cate.name}} ({{cate.count}})</a></li>{%endfor%}</ul>{% endif %}
+			</div>
+		<!-- End #topMenu -->
+		<!-- Begin #topMenuRight -->
+			<div id="topMenuRight">
+			<ul>
+<li class="{%if ishome%}current_page_item{%else%}page_item{%endif%}"><a href="/" title="Home">Home</a></li>
+					{{self.m_list_pages}}
+                    <li><a href="/admin">Login</a></li>
+</ul>
+			</div>
+		<!-- End #topMenuRight -->
+		<!-- Begin #socialLinks -->
+			<div id="socialLinks">
+				<a href="http://cn.linkedin.com/in/takeasy" class="linkedin" title="LinkedIn!">Join us on LinkedIn!</a>
+				<a href="http://www.takeasy.org.ru/" class="facebook" title="Facebook!">Join us on Facebbook!</a>
+				<a href="http://twitter.com/intocenter" class="twitter" title="Twitter!">Follow Us on Twitter!</a>
+				<a href="{{ blog.feedurl }}" title="RSS" class="rss">Subscribe to our RSS Feed!</a>
+			</div>
+		<!-- End #socialLinks -->
+	</div>
+	<!-- End #header -->
+	
+	<!-- Begin #content -->
+    <div id="content" class="clearfix">
+    {% block content %}{% endblock %}
+    </div>
+		<!-- end content -->
+            </div>
+	<!-- end wrapper -->
+	<!-- begin footer -->
+	<div id="footer">
+		<div id="footerInner">
+		<!-- Popular Articles -->
+        <div class="boxFooter">
+		<h2>Popular Articles</h2>
+          {% if blog.hotposts %}
+			<ul>
+				{% for entry in blog.hotposts %}
+				<li><a href="/{{entry.link|escape}}" title="{{entry.title|escape}}">{{entry.title|escape}}</a>({{entry.readtimes}})</li>
+				{%endfor%}
+			</ul>
+			{% endif %}
+		</div>
+        
+		<div class="boxFooter">
+		<h2>Latest Articles</h2>      
+       {% if blog.recentposts %}
+			<ul>
+				{% for entry in blog.recentposts %}
+				<li><a href="/{{entry.link|escape}}" title="{{entry.title|escape}}">{{entry.title|escape}}</a>({{entry.readtimes}})</li>
+				{%endfor%}
+			</ul>
+			{% endif %}
+		</div>
+		
+		<div class="boxFooter">
+		<h2>Blog log</h2>
+        <span>&raquo;&nbsp;&nbsp;&nbsp;&nbsp;In the background "bulletin board" fill in text or HTML code, its contents will be displayed here.<P></P></span>
+        <p><!-- img src="/themes/{{ blog.theme_name }}/images/ico_becomeauthor.png" alt="加入{{ blog.title|escape}}" /></p-->
+        <p></p>
+			{{blog.blognotice}}
+		</div>
+		</div>
+	</div>
+	<div id="copyright">
+		<div id="copyrightInner">
+    <span class="copyrightleft";>&copy;Copyright 2012 {{ blog.title|escape}}. Powered by <a href="https://www.appspot.com">GAE</a> And <a href="http://blog.SiLApps.com">blog.SiLApps.com</a></span>
+		<div id="site5bottom"><a href="http://www.softwareinlife.com"></a>{%mf footer%}{%endmf%}</div>
+		</div>
+	</div>
+	<!-- end footer -->
+
+</body>
+</html>

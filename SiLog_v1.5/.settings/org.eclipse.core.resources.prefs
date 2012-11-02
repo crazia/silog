@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//plugins/live_import/live_import.py=utf-8
+encoding//plugins/sys_plugin/sys_plugin.py=utf-8
+encoding/admin.py=utf-8
+encoding/api_rpc.py=utf-8
+encoding/base.py=utf-8
+encoding/blog.py=utf-8
+encoding/model.py=utf-8
+encoding/settings.py=utf-8
+encoding/theme_files.py=utf-8

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block head_block %}
+<meta name="google-site-verification" content="16hiv7kT5wShKkfz10PZ7dsemiTat68F2vV1odwWxI0" />
+<meta name="Keywords" content="Silog,半条死鱼,takeasy.org.ru,python,google app engine,win7,soft,免费,游戏" />
+<meta name="Description" content="这是'半条死鱼'的个人独立博客,由Google App Engine提供免费空间,Silog程序搭建" />
+
+{% endblock %}
+
+{% block content %}
+		<!-- begin colLeft -->
+		<div id="colLeft">
+			{% if entries %}
+        {% for entry in entries %}
+		<!-- begin post -->
+		<div class="blogPost clearfix">
+			<div class="metaLeft">
+				<div class="month">{{entry.date|datetz:"M"}}</div>
+				<div class="day">{{entry.date|datetz:"j"}}</div>
+				<div class="comments"><a href="/{{entry.link|escape}}#comments">{{entry.commentcount}}</a></div>
+			</div>
+			<div class="postRight">
+				<div class="titBullet"></div>
+				<h1><a href="/{{ entry.link|escape }}" rel="bookmark" title="Click to read： {{entry.title|escape}}">{{entry.title|escape}}</a></h1>
+				<div class="metaRight">
+				<img src="/themes/{{ blog.theme_name }}/images/ico_user.png" alt="Author" /> {{entry.author_name}}&nbsp;&nbsp;&nbsp; <img src="/themes/{{ blog.theme_name }}/images/ico_folder.png" alt="Category" /> {%for cate in entry.categories%}<a href="/category/{{cate.slug}}"> {{cate.name}}</a> {%endfor%} &nbsp;&nbsp;&nbsp; <img src="/themes/{{ blog.theme_name }}/images/ico_tag.png" alt="Tags" /> {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> {%endfor%}</div>
+				<p>{{entry|excerpt_more:""}}</p>
+                <div class="clear"></div>
+                <p><a class="more-link" href="/{{ entry.link|escape }}">read more</a></p>
+			</div>
+		</div>
+		<!-- end post -->
+		{% endfor %}
+        <div class="navigation">
+					<script type="text/javascript" src="/themes/alltuts/js/pagenavi.js"></script>
+					<script type="text/javascript">
+					showPageLink("/page/",{{pageindex}},{{pagecount}},"");
+					</script>
+					<span class="pages">&nbsp;&nbsp;&nbsp;Common {{postscount}} Articles</span>
+				</div>
+		{% else %}
+
+		<p>Sorry, but you are looking for something that isn't here.</p>
+
+	{% endif %}
+		</div>
+		<!-- end colLeft -->
+
+<!-- begin colRight -->
+		<div id="colRight">	
+			{% include "sidebar.html" %}
+			</div>
+<!-- end colRight -->
+
+{% endblock %}

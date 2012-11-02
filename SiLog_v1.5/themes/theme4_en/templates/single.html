@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %} {{entry.title|escape}} - {{blog.title|escape}} {% endblock %}
+
+{% block head_block %}
+
+{% if entry %}
+{%if entry.strtags%}<meta name="Keywords" content="{{entry.strtags|escape}}" />{%endif%}
+{%if entry.excerpt%} <meta name="Description" content="{{entry.excerpt|escape}}" />{%endif%}
+{% endif %}
+
+{% endblock %}
+
+{% block content %}
+<!-- begin col left -->
+	<div id="colLeft">
+    {% if entry %}
+		<!-- begin post -->
+		<div class="blogPost clearfix">
+			<div class="metaLeft">
+				<div class="month">{{entry.date|datetz:"M"}}</div>
+				<div class="day">{{entry.date|datetz:"j"}}</div>
+				<div class="comments"><a href="/{{entry.link|escape}}#comments">{{entry.commentcount}}</a></div>
+			</div>
+			<div class="postRight">
+				<div class="titBullet"></div>
+				<h1><a href="/{{ entry.link|escape }}" rel="bookmark" title="Click to read： {{entry.title|escape}}">{{entry.title|escape}}</a></h1>
+				<div class="metaRight">
+				<img src="/themes/{{ blog.theme_name }}/images/ico_user.png" alt="Author" /> {{entry.author_name}}&nbsp;&nbsp;&nbsp; <img src="/themes/{{ blog.theme_name }}/images/ico_folder.png" alt="Category" /> {%for cate in entry.categories%}<a href="/category/{{cate.slug}}"> {{cate.name}}&nbsp;&nbsp;</a> {%endfor%} &nbsp;&nbsp;<img src="/themes/{{ blog.theme_name }}/images/ico_tag.png" alt="Tags" /> {%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}&nbsp;&nbsp;</a> {%endfor%}
+                </div>
+				<p>{{ entry.content }}</p>
+                <div class="clear"></div>
+		<!-- Social Sharing Icons -->
+		<div class="social clearfix">
+			 <span>If you enjoyed this article please consider <strong>sharing it!</strong></span>
+				<a href="/" title="Tweet this!">
+				<img src="/themes/{{ blog.theme_name }}/images/twitter.png" alt="Tweet this!" />
+				</a>
+				
+				<a href="/" title="StumbleUpon.">
+				<img src="/themes/{{ blog.theme_name }}/images/stumbleupon.png" alt="StumbleUpon" />
+				</a>
+				
+				<a href="/" title="Vote on Reddit.">
+				<img src="/themes/{{ blog.theme_name }}/images/reddit.png" alt="Reddit" />
+				</a>
+				<a href="/" title="Digg this!">
+				<img src="/themes/{{ blog.theme_name }}/images/digg.png" alt="Digg This!" />
+				</a>
+				
+				<a href="/" title="Bookmark on Delicious.">
+				<img src="/themes/{{ blog.theme_name }}/images/delicious.png" alt="Bookmark on Delicious" />
+				</a>
+				
+				<a href="/" title="Share on Facebook.">
+				<img src="/themes/{{ blog.theme_name }}/images/facebook.png" alt="Share on Facebook" id="sharethis-last" />
+				</a>
+				
+			</div>
+		
+		<!-- end Social Sharing Icons -->
+			</div>
+		</div>
+		<!-- end post -->
+            {% include "comments.html" %}
+		{% else %}
+
+		<p>Sorry, but you are looking for something that isn't here.</p>
+        
+	{% endif %}
+			</div>
+			<!-- end col left -->
+	
+<!-- begin col right -->
+		<div id="colRight" class="clearfix">
+			{% include "sidebar.html" %}
+		</div>
+		<!-- end col right -->
+{% endblock %}

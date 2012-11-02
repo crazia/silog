@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %} {{entry.title}} - {{blog.title}} {% endblock %}
+{% block head_block %}
+{% if entry %}
+{%if entry.strtags%}<meta name="Keywords" content="{{entry.strtags}}">{%endif%}
+{%if entry.excerpt%} <meta name="Description" content="{{entry.excerpt}}">{%endif%}
+<style type="text/css">
+.post img, .post a img { border:1px solid #ccc; padding:5px; margin:0 10px 0 0;  background:#f2f2f2; }
+.post a:hover img { border:1px solid #38a1e5; background:#9cd1e1; }
+.post img.wp-smiley { border:0px; padding:0px; margin:0px; background:none; }
+</style>
+<script type="text/javascript" src="/themes/{{ blog.theme_name }}/rounded_corners_lite.inc.js"></script>
+<script type="text/javascript" src="/static/js/jquery-1.3.2.min.js"></script>
+{% endif %}
+{% endblock %}
+{% block content %}
+
+<!-- content START -->
+  
+<div id="contents" class="clearfix">
+  <div id="left_col">
+  
+  {% if entry %}
+    <div class="post clearfix" id="single_post">
+      <div class="post_content_wrapper">
+	
+        <h2><span><a href="/{{ entry.link }}">{{ entry.title }}</a></span></h2>
+        <div class="post_content"> 
+		{%mf entry_content %}
+{{ entry.content }}
+{%endmf%}
+		 </div>
+      </div>
+      <dl class="post_meta">
+        <dt class="meta_date">{{ entry.date|datetz:"Y" }}</dt>
+        <dd class="post_date">{{ entry.date|datetz:"m" }}<span>/{{ entry.date|datetz:"d" }}</span></dd>
+        <dt>Classification：</dt>
+        <dd> {%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%}</dd>
+        <dt>Label：</dt>
+       
+        <dd> {% if entry.tags%}{%for tag in entry.tags%} <a href="/tag/{{tag|urlencode}}">{{tag}}</a><br/>{%endfor%}{%endif%}</dd>
+        
+        <dt class="meta_comment"><a href="#respond">Write</a></dt>
+      </dl>
+    </div>
+
+	<div id="comments_wrapper">
+
+		        <div id="comment_header" class="clearfix">
+          <ul id="comment_header_left">
+            <li id="add_comment"><a href="#respond">Write</a></li>
+            <li id="comment_feed"><a href="{{ blog.feedurl }}#comment" title="Comment RSS">Comment RSS</a></li>
+          </ul>
+          <ul id="comment_header_right">
+            {%if blog.allow_trackback and entry.allow_trackback%}<li id="trackback_switch"><a href='{{entry.trackbackurl}}'>引用通告</a></li>{%endif%}
+            <li id="comment_switch" class="comment_switch_active"><a href="#respond">Comment ({{entry.comments.count}})</a></li>
+          </ul>
+        </div>
+        <!-- comment_header END -->
+		
+{% include "comments.html" %}
+<!--
+<div id="comment_area">                 </div> 
+-->	
+	</div>
+
+{% endif %}
+
+  </div>
+<!-- #left_col end -->
+  {% include "sidebar.html" %}
+   </div>
+<!-- #contents end -->
+{% endblock %}

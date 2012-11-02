@@ -1,0 +1,158 @@
+
+<!-- #comment start -->
+<div id="comments">
+
+ {% if entry.allow_comment %}
+		  {% if entry.comments.count%}
+  <div id="comment_area">
+    <!-- start commnet -->
+    <ol class="commentlist">
+      {% for comment in comments %}
+      <li class="comment guest-comment" id="comment-{{comment.key.id}}">
+        <div class="comment-meta">
+          <div class="comment-meta-left"> <img alt='' src="{{comment.gravatar_url}}" class='avatar avatar-35 photo avatar-default' height='35' width='35' />
+            <ul class="comment-name-date">
+              <li class="comment-name"> {%if comment.weburl %} <a id="commentauthor-{{comment.key.id}}" class="url guest-url" href="{{comment.weburl}}"  target="_blank" rel="external nofollow"></a> {% else %}{{comment.author}}{%endif%} </li>
+              <li class="comment-date">{{comment.date.date|datetz:"Y-m-d"}}</li>
+            </ul>
+          </div>
+          <ul class="comment-act">
+		  <!--
+            <li class="comment-reply"> <a href="javascript:void(0);" onclick="MGJS_CMT.reply('commentauthor-{{comment.key.id}}', 'comment-{{comment.key.id}}', 'comment');">Reply</a></li>
+            <li class="comment-quote"> <a href="javascript:void(0);" onclick="MGJS_CMT.quote('commentauthor-{{comment.key.id}}', 'comment-{{comment.key.id}}', 'comment-content-{{comment.key.id}}', 'comment');">引用</a></li>
+          -->
+		  </ul>
+        </div>
+        <div class="comment-content" id="comment-content-{{comment.key.id}}">
+          <p>{{comment.content}}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+	
+<div class="clearfix" id="comment_pager">
+{{comments_nav.nav}}
+</div>
+	
+	
+    <!-- comments END -->
+  </div><!--//comment_area end-->
+  {%endif%}
+  <!-- #comment-list END -->
+  <div id="trackback_area">
+    <!-- start trackback 
+    <div id="trackback_url_wrapper">
+	
+      <label for="trackback_url">引用网址</label>
+      <input type="text" name="trackback_url" id="trackback_url" size="60" value="{{blog.baseurl}}/{{ entry.link }} " readonly="readonly" onfocus="this.select()" />
+    </div>
+    <ol class="commentlist">
+      <li class="comment">
+        <div class="comment-content">
+          <p>还没有引用通告。</p>
+        </div>
+      </li>
+    </ol>
+     trackback end -->
+  </div>
+  <!-- #trackbacklist END -->
+  <fieldset class="comment_form_wrapper" id="respond">
+  <div id="cancel_comment_reply">
+  <!--
+   <a rel="nofollow" id="cancel-comment-reply-link" href="/?p={{entry.key}}#respond" style="display:none;">点击这里取消Reply</a>
+   --> </div>
+  <form action="/post_comment" method="post" id="commentform">
+    <div id="guest_info">
+      <div id="guest_name">
+        <label for="author">Name <span style='color:red'>*</span></label>
+        <input type="text" name="author" id="author"  size="22" tabindex="1" aria-required='true' />
+      </div>
+      <div id="guest_email">
+        <label for="email">email <span style='color:red'>*</span>(for your privacy)</label>
+        <input type="text" name="email" id="email" value="" size="22" tabindex="2" aria-required='true' />
+      </div>
+      <div id="guest_url">
+        <label for="url"><span>Website</span></label>
+        <input type="text" name="url" id="url" size="22" tabindex="3" />
+      </div>
+    </div>
+    <div id="comment_textarea">
+      <textarea name="comment" id="comment" cols="50" rows="10" tabindex="4"></textarea>
+    </div>
+	
+	{%ifequal blog.comment_check_type 1%}
+<p id="checkarea">
+<iframe src="/checkcode/"  style="width:80px;height:20px;border:0;"SCROLLING=no></iframe>
+<input type="text" name="checkret" id="checkret" value="" size="5" tabindex="4" />
+</p>
+{%endifequal%}
+{%ifequal blog.comment_check_type 2%}
+<div id="checkarea" style="padding-bottom:15px">
+
+<div style="float:left;margin-right:8px;"><label for="checkret"><small>Checkcode:</small></label>
+<input type="text" name="checkret" id="checkret" value="" size="5" tabindex="4" />
+</div>
+<img id='checkimg' src='/checkimg/' style="border:0px;padding:0px;" title='Click to change image' onclick="reloadCheckImage();"/>
+</div>
+{%endifequal%}
+
+    <div id="submit_comment_wrapper">
+      <input name="submit" type="submit" id="submit_comment" tabindex="5" value="Submit a comment" title="提交评论" alt="提交评论" />
+    </div>
+    <div id="input_hidden_field">
+      <input type="hidden" name="key" value="{{entry.key}}" />
+    </div>
+  </form>
+  </fieldset>
+  <!-- #comment-form-area END -->
+</div>
+<!-- #comment end -->
+
+<script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
+<script type='text/javascript' src='/themes/{{ blog.theme_name }}/comment-reply.js?ver=20090102'></script>
+
+<script>
+    commentuser=$.cookie('comment_user');
+       if (commentuser)
+       {
+         //[user,email,url]=commentuser.split('#@#');
+         var tuple=commentuser.split('#@#');
+        var user,email,url;
+        user=tuple[0];
+        email=tuple[1];
+        url=tuple[2];
+         $('#author').val(user);
+         $('#email').val(email);
+         $('#url').val(url);
+       }
+
+  $('#commentform').submit(function(){
+         var form = this;
+           if (form.author)
+  		   {
+
+      			 if (!form.author.value)
+          		 {
+          		  alert('请输入您的姓名.');
+          		  form.author.focus();
+          		  return false;
+          		 }
+          		 if (!form.email.value)
+          		 {
+          		 	alert('请输入你的邮件地址.');
+          		 	form.email.focus();
+          		 	return false;
+          		 }
+	       }
+
+      		 if (!form.comment.value)
+      		 {
+      		 	alert('请输入评论内容.');
+      		 	form.comment.focus();
+      		 	return false;
+      		 }
+
+      		 return true;
+  });
+</script>
+{% endif %} 

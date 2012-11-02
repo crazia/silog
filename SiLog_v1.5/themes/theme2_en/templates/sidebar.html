@@ -1,0 +1,108 @@
+﻿<!-- sidebar START -->
+   <div id="right_col"> 
+  
+    <div id="information_area" class="clearfix"> 
+   <div class="side_box" id="information"> 
+    <h3>Information</h3> 
+    <div id="information_contents">{{blog.blognotice}}</div> 
+   </div> 
+      <div id="entries_rss"> 
+    <a href="{{ blog.feedurl }}" title="文章RSS" >RSS FEED</a> 
+   </div> 
+     </div> 
+  
+    <div class="side_box" id="search_area_top"> 
+   <div id="search_area" class="clearfix"> 
+    <form method="get" id="searchform" action="http://www.google.com/search"> 
+     <div><input type="text" value="Search..." onfocus="if (this.value == 'Search...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search...';}" name="as_q" id="search_input" /></div> 
+     <div><input type="image" src="/themes/{{blog.theme_name}}/img/search_button_n.gif" alt="搜索本博客" title="搜索本博客" id="search_button" /></div> 
+    		<input name="as_sitesearch" value="{{blog.domain}}" type="hidden">
+	</form> 
+   </div> 
+     </div> 
+  
+     <div class="side_box"> 
+   <h3>Classification</h3> 
+   <ul> 
+            	{%for cate in categories%}
+            <li class="cat-item cat-item-1"><a href="/category/{{cate.slug}}">{{cate.name}}</a>({{cate.count}})</li>
+            {%endfor%}
+    	</ul>
+   </ul> 
+   </div> 
+
+  
+   <div class="side_box"> 
+   <h3>Last log</h3> 
+    <ul> 
+	 {% for entry in blog.recentposts %}
+     <li class="side_date">{{ entry.date|datetz:"Y-m-d" }}</li> 
+	 <li><a href="/{{entry.link}}" title="{{entry.title}}">{{entry.title}}</a></li>
+     {%endfor%}
+   </ul> 
+  </div> 
+ 
+ 
+     <div class="side_box"> 
+   <h3>Last reviewed</h3> 
+   <ul> 
+        {% for comment in recent_comments %}
+        <li><a href="/{{comment.entry.link}}#comment-{{comment.key.id}}">{{comment.author}}:</a> {{comment.shortcontent}}...</li>
+        {%endfor%}
+   </ul> 
+   </div> 
+ 
+    <div class="side_box"> 
+   <h3>Label</h3> 
+   <div>
+{% for t in alltags %}
+<a title="{{ t.tagcount }} pages" href="/tag/{{t.tag|urlencode}}"><span style='font-size:{{ t.tagcount|add:9 }}px;'>{{t.tag}}</span></a>
+{%endfor%}
+</div>
+   </div> 
+ 
+
+ 
+    <div class="side_box"> 
+   <h3>Popular Articles</h3> 
+   <ul> 
+        {% for entry in blog.hotposts %}
+		<li><a href="/{{entry.link|escape}}" title="{{entry.title|escape}}">{{entry.title|escape}}({{entry.readtimes}})</a></li>
+        {%endfor%}
+   </ul> 
+   </div>
+ 
+ 
+   <div class="side_box"> 
+   <h3>Archive</h3> 
+   <ul> 
+   	{%for archive in archives%}
+		<li><a href="/{{archive.year}}/{{archive.month}}">{{archive.year}}.{{archive.month}}.({{archive.entrycount}})</a></li>
+		{%endfor%}
+   </ul> 
+   </div> 
+ 
+    <div class="side_box"> 
+   <h3>Links</h3> 
+   <ul> 
+{%for link in blogroll%}
+<li><a href="{{link.href}}" target="_blank">{{link.linktext}}</a></li>
+{%endfor%}   </ul> 
+   </div> 
+   
+      <div class="side_box"> 
+   <h3>Function</h3> 
+   <ul> 
+    {%if self.is_admin or self.author%}
+     <li><a href="/admin">Management</a> </li>
+    {%endif%}
+        <li> {%if self.is_login%}       <a href="{{self.logouturl}}">Log out</a>     {%else%}       <a href="/admin">Login</a>     {%endif%}         </li>
+        <li><a href="{{ blog.feedurl }}" title="Subscribe to this site RSS 2.0">Journal <abbr title="RSS">RSS</abbr></a></li>
+	   
+   </ul> 
+   </div> 
+ 
+ 
+  
+</div><!-- #right_col end --> 
+<!-- sidebar END -->

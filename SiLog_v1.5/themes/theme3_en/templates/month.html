@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %} {{year}}.{{month}}. - {{blog.title|escape}} {% endblock %}
+
+{% block content %}
+	<div class="title">
+		<h2> ☞Archived Article--{{year}}.{{month}}.</h2>
+	</div>
+	
+	{% for entry in entries %}
+		<div class="post">
+			<div class="date">
+				<span>{{entry.date|date:"M"}}</span>
+				{{entry.date|date:"d"}}
+			</div>
+			
+			<div class="title">
+				<h2>
+					<a href="/{{entry.link|escape}}" rel="bookmark" title = "{{entry.title}}">{{entry.title|escape}}</a>
+				</h2>
+				<div class="postdata">
+					<span class="category">
+						{%for tag in entry.tags%} <a href="/tag/{{tag|urlencode}}" rel="tag">{{tag}}</a> {%endfor%}
+					</span>
+					<span class="comments">
+						<a href="/{{entry.link}}#comments">({{entry.commentcount}})</a>
+						{%if self.is_admin%} | <a href="{{entry.edit_url}}" class="alert">Edit</a>
+						{%endif%}
+					</span>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+{% endblock %}

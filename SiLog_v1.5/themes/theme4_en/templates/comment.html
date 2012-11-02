@@ -1,0 +1,23 @@
+<li id="comment-{{comment.key.id}}" class="comment">	 
+	 <div class="comment-metaLeft">
+			<img width="40" height="40" class="avatar avatar-40 photo" src="{{comment.gravatar_url}}" alt="">
+            </div>
+			<div class="commentRight">
+			<div class="commentBullet"></div>
+            
+            {%if comment.weburl %}
+                    <a id="comment-{{comment.key.id}}" class="url" target="_blank" href="{{comment.weburl}}"><span><strong>{{comment.author}}</strong></span></a>
+                    {% else %}<span><strong>{{comment.author}}</strong></span>{%endif%}&nbsp;{{comment.date|datetz:"Y-m-d"}} at {{comment.date|datetz:"H:i"}}</small>
+				  <div id="commenttext-{{comment.key.id}}" class="text">
+                  <p>{{comment.content}}</p>
+ </div>
+				   			<div class="reply">
+                            {% if comment.reply_notify_mail %}
+                    <a onclick="return backcomment('{{comment.author}}','{{comment.key.id}}')" href="#commentform" title="@{{comment.author}}-{{comment.key.id}}:" style="color:red">Reply</a> 
+                    {% else %}
+                    <a onclick="return backcomment('{{comment.author}}','{{comment.key.id}}')" href="#commentform" title="@{{comment.author}}-{{comment.key.id}}:">Reply</a> 
+                    {% endif %}
+                    <a onclick="return quote('{{comment.author}}','commenttext-{{comment.key.id}}')" href="#commentform">&nbsp;&nbsp;Quote</a>
+                     				  </div>
+     </div>
+     </li>
