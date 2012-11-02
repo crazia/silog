@@ -1,0 +1,65 @@
+<h3 id="comments">
+	{{entry.comments.count}} Responses to "{{entry.title}}"
+</h3>
+{% if entry.comments.count%}
+	<ol class="commentlist">
+		{%for comment in comments%}
+			<li class="alt" id="comment-{{comment.key.id}}">
+				<cite>{%if comment.weburl %}
+					<a href="{{comment.weburl}}" target="_blank" rel="external nofollow" >{{comment.author}}</a>
+					{% else %}{{comment.author}}{%endif%}
+				</cite>
+				Says: 
+				<br>
+				<small class="commentmetadata">
+					<a href="#commentarea">{{comment.date|datetz:"Y-m-d"}} at {{comment.date|datetz:"H:i"}}</a>
+				</small>
+				<p>{{comment.content}}</p>
+			</li>
+		{%endfor%}
+	</ol>
+{%endif%}
+
+<h3 id="respond">Leave a Reply</h3>
+{% if entry.allow_comment %}
+	<form method="post" id="commentform" action="/post_comment">
+		<p>
+			<input type="text" name="author" id="author" value="" size="22" tabindex="1">
+			<label for="author"><strong>Name</strong> (required)</label>
+		</p>
+		
+		<p><input type="text" name="email" id="email" value="" size="22" tabindex="2">
+			<label for="email"><strong>Mail</strong> (will not be published) (required)</label>
+		</p>
+		
+		<p><input type="text" name="url" id="url" value="" size="22" tabindex="3">
+			<label for="url"><strong>Website</strong></label>
+		</p>
+		
+		{%ifequal blog.comment_check_type 1%}
+			<p id="checkarea">
+				<input type="text" name="url" id="url" value="" size="22" tabindex="4">
+				<label for="url"><strong>Please enter the calculation results：<iframe src="/checkcode/"  style="width:80px;height:25px;border:0;"SCROLLING=no></iframe></strong></label>
+			</p>
+		{%endifequal%}
+		{%ifequal blog.comment_check_type 2%}
+			<div id="checkarea" style="padding-bottom:15px">
+			
+			<div style="float:left;margin-right:8px;">
+			<input type="text" name="checkret" id="checkret" value="" size="5" tabindex="4" />
+			<label for="checkret"><small>Checkcode:</small></label>
+			</div>
+			<img id='checkimg' src='/checkimg/' style="border:0px;padding:0px;" title='Click to change image' onclick="reloadCheckImage();"/>
+			</div>
+		{%endifequal%}
+		
+		<p><input type="hidden" name="checknum" id="checknum" value="{{checknum1}}+{{checknum2}}" />
+		</p>
+		<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="5"></textarea></p>
+		
+		<p><input name="submit" type="submit" id="submit" tabindex="6" value="Submit a comment">
+			<input type="hidden" name="key" value="{{entry.key}}"></p>
+	</form>
+{% else %}
+	<p class="nocomments">Comment has been closed</p>
+{% endif %}

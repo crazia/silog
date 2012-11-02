@@ -1,0 +1,39 @@
+{%extends "base.html"%}
+
+{%block title%}{{entry.title}} - {{blog.title}}{%endblock%}
+
+{%block content%}
+{%if entry%}
+	<div class="post-nav"> 
+		<span class="previous">{%for cate in entry.categories%} <a href="/category/{{cate.slug}}" rel="tag">{{cate.name}}</a> {%endfor%}</span>
+		<span class="next"></span>
+	</div>
+	<div class="post" id="post-{{ entry.post_id }}">
+		<div class="date">
+			<span>{{entry.date|date:"M"}}</span>
+			{{entry.date|date:"d"}}
+		</div>
+		
+		<div class="title">
+			<h2>
+				<a href="/{{entry.link}}" rel="bookmark" title = "{{entry.title}}">{{entry.title}}</a>
+			</h2>
+			<div class="postdata">
+				<span class="category">
+					{%for tag in entry.tags%} <a href="/tag/{{tag|urlencode}}" rel="tag">{{tag}}</a> {%endfor%}
+				</span>
+				<span class="comments">
+					<a href="/{{entry.link}}#comments">({{entry.commentcount}})</a>
+					{%if self.is_admin%} | <a href="{{entry.edit_url}}" class="alert">Edit</a>
+					{%endif%}
+				</span>
+			</div>
+		</div>
+		
+		<div class="entry">
+			{{ entry.content }}
+		</div>
+		{% include "comments.html" %}
+	</div>
+{%endif%}
+{%endblock%}

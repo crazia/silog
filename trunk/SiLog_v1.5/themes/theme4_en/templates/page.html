@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %} {{entry.title|escape}} - {{blog.title|escape}} {% endblock %}
+
+{% block head_block %}
+
+{% if entry %}
+{%if entry.strtags%}<meta name="Keywords" content="{{entry.strtags|escape}}" />{%endif%}
+{%if entry.excerpt%} <meta name="Description" content="{{entry.excerpt|escape}}" />{%endif%}
+{% endif %}
+
+{% endblock %}
+
+{% block content %}
+<!-- begin colLeft -->
+	<div id="colLeft">
+		<h1><a href="/{{ entry.link|escape }}" rel="bookmark" title="Click to read： {{entry.title|escape}}">{{entry.title|escape}}</a></h1>	
+		 {% if entry %}
+		
+		<p>{{ entry.content }}</p>
+       <div class="clear"></div>
+		{% else %}
+
+		<p>Sorry, but you are looking for something that isn't here.</p>
+        
+	{% endif %}
+	</div>
+	<!-- end colleft -->
+	
+	<!-- begin colRight -->
+	<div id="colRight">
+	{% include "sidebar.html" %}
+	</div>
+	<!-- end colRight -->
+
+{% endblock %}

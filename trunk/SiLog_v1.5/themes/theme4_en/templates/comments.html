@@ -1,0 +1,74 @@
+<!-- comments  -->
+
+{% if entry.allow_comment %}
+<script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/static/js/jquery.form.utf8.js"></script>
+<script type="text/javascript" src="/themes/{{ blog.theme_name }}/js/comment.js"></script>
+<a name="comments"></a>
+	<h2 class="commentsnumber">This article existing {{ entry.commentcount }} Comments</h2>
+    {% if comments %}
+<ul id="thecomments" class="commentlist clearfix">
+        {% for comment in comments %}
+        <li id="comment-{{comment.key.id}}" class="comment">	 
+	 <div class="comment-metaLeft">
+			<img width="40" height="40" class="avatar avatar-40 photo" src="{{comment.gravatar_url}}" alt="">
+            </div>
+			<div class="commentRight">
+			<div class="commentBullet"></div>
+            
+            {%if comment.weburl %}
+                    <a id="comment-{{comment.key.id}}" class="url" target="_blank" href="{{comment.weburl}}"><span><strong>{{comment.author}}</strong></span></a>
+                    {% else %}<span><strong>{{comment.author}}</strong></span>{%endif%}&nbsp;{{comment.date|datetz:"Y-m-d"}} at {{comment.date|datetz:"H:i"}}</small>
+				  <div id="commenttext-{{comment.key.id}}" class="text">
+                  <p>{{comment.content}}</p>
+ </div>
+				   			<div class="reply">
+                            {% if comment.reply_notify_mail %}
+                    <a onclick="return backcomment('{{comment.author}}','{{comment.key.id}}')" href="#commentform" title="@{{comment.author}}-{{comment.key.id}}:" style="color:red">Reply</a> 
+                    {% else %}
+                    <a onclick="return backcomment('{{comment.author}}','{{comment.key.id}}')" href="#commentform" title="@{{comment.author}}-{{comment.key.id}}:">Reply</a> 
+                    {% endif %}
+                    <a onclick="return quote('{{comment.author}}','commenttext-{{comment.key.id}}')" href="#commentform">&nbsp;&nbsp;Quote</a>
+                     				  </div>
+     </div>
+     </li>
+        {% endfor %}
+	</ul>
+<div class="commentsnavi"><span>{{comments_nav.nav}}</span></div>
+  {% else %}
+        <ul id="thecomments" class="commentlist clearfix"></ul>
+        {% endif %}
+
+<div id="respond">
+
+<h2>Leave your comment</h2>
+
+   <input type="hidden" value="{{blog.comment_check_type}}" id="check_type"/>
+    <form action="/post_comment" method="post" id="commentform">
+                <p><label for="author">Your nickname (required)</label> 
+                <input type="text" name="author" id="author" value="" size="22" tabindex="1" /></p>
+                <p><label for="email">Email (required, will be kept confidential)</label>
+                <input type="text" name="email" id="email" value="" size="22" tabindex="2" /></p> 
+                <p><label for="url">Your site</label>
+                <input type="text" name="url" id="url" value="" size="22" tabindex="3" /></p>
+                
+                <div id="checkarea">
+                <label class="checkcode" for="checkret" >Verification code (<a href="javascript:showCheckImage();">Click to display</a>)：</label><img id="checkimg" style="visibility:hidden;padding-right:350px" title="点击图片更换验证码" onclick="reloadCheckImage();" />
+                <input type="text" name="checkret" id="checkret" value="" size="22" tabindex="4" />
+</div>
+            <p><label for="comment">Fill out the comment</label>
+               <textarea name="comment" id="comment" rows="10" cols="10" tabindex="5"></textarea>
+                    <input type="hidden" name="key" value="{{entry.key}}" />
+                    <input type="hidden" name="useajax" value="1" />
+                    <input type="submit"  name="submit" id="submit" value="Add a comment&raquo;" onClick="login();" tabindex="6" />
+                    <input name="reply_notify_mail" id="reply_notify_mail" tabindex="7" style="width: auto;margin-left:20px" type="checkbox" />
+                    <label for="reply_notify_mail" style="display:inline">There reply mail notification</label></p>
+            <div id="s_msg" style="display:none;color:red">Submit comments ...</div>
+<!--[if IE]><SCRIPT src="/themes/{{ blog.theme_name }}/js/cookies.js" type=text/javascript></SCRIPT><![endif]-->
+    </form>
+</div> 
+{% else %}
+<ul id="thecomments" class="commentlist clearfix"><p>Comment has been closed</p></ul>
+{% endif %}
+
+<!-- /comments -->

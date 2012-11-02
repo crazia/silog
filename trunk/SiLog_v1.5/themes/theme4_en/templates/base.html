@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head profile="http://gmpg.org/xfn/11">
+{%mf head%}
+<title>{% block title %} {{ blog.title|escape}}{% endblock %}</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="alternate" type="application/rss+xml" title="{{ blog.title|escape }} RSS Feed" href="{{ blog.feedurl }}" />
+<link href="/themes/{{ blog.theme_name }}/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/themes/{{ blog.theme_name }}/css/blue.css" media="screen" />
+<!--[if gte IE 7]>
+<link rel="stylesheet" media="screen" type="text/css" href="/themes/{{ blog.theme_name }}/ie7.css" />
+<![endif]-->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+{%endmf%}
+</head>
+<body>
+
+<!-- begin mainWrapper -->
+<div id="mainWrapper">
+	<!-- begin wrapper -->
+	<div id="wrapper">
+	<!-- begin header -->
+	<div id="header">
+	<!-- div id="site5top"><a href="http://gk.site5.com/t/199">Site5 | Experts In Reseller Hosting.</a></div-->
+	<a href="{{ blog.feedurl }}" title="RSS" class="rssTag">RSS Feeds</a>
+	<!-- logo -->
+		<div id="logo"><a href="/"><img src="/themes/{{ blog.theme_name }}/images/logo.png" alt="{{ blog.title|escape}}" /></a></div>
+		<!-- begin topmenu -->
+        <div class="menu-toplinks-container" id="topMenu">
+			<ul>
+<li class="{%if ishome%}current_page_item{%else%}page_item{%endif%}"><a href="/" title="Home">Home</a></li>
+					{{self.m_list_pages}}
+                    <li><a href="/admin">Login</a></li>
+</ul>
+		<!-- end topmenu -->
+        </div>
+		<!-- begin mainMenu -->
+        <div id="mainMenu">				
+		{% if categories %}<ul class="sf-menu sf-js-enabled sf-shadow">{%for cate in categories%}<li><a href="/category/{{cate.slug}}">{{cate.name}} ({{cate.count}})</a></li>{%endfor%}</ul>{% endif %}
+		<!-- end mainMenu -->
+		</div>
+	</div>
+	<!-- end header -->
+	<!-- begin content -->
+	<div id="content" class="clearfix">
+    {% block content %}{% endblock %}
+    	</div>
+	<!-- end content -->
+	</div>
+	<!-- end wrapper -->
+	<!-- begin footer -->
+	<div id="footer">
+    <div class="menu-footerlinks-container" id="footerMenu">
+	<ul id="menu-footerlinks" class="menu">
+        <li><a href="/">About this blog</a></li>
+        <li><a href="/">PageNo.1</a></li>
+		<li><a href="/">PageNo.2</a></li>
+	</ul>
+    </div>
+    <div class="clear"></div>
+	<span>&copy; 2012 <strong>{{ blog.title|escape}}</strong>. All Right Reserved. Powered By <a href="https://www.appspot.com">GAE</a> And <a href="http://blog.SiLApps.com">blog.SiLApps.com</a> </span>
+	<div id="site5bottom"><a href="http://www.softwareinlife.com"></a>{%mf footer%}{%endmf%}</div>
+	</div>
+	<!-- end footer -->
+</div>
+<!-- end mainWrapper -->
+</body>
+</html>

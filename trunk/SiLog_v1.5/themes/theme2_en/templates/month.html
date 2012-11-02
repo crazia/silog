@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %} {{year}}.{{month}}. - {{blog.title|escape}} {% endblock %}
+<!-- content START -->
+{% block content %}
+
+  <div id="contents" class="clearfix">
+  
+{% if entries %}
+   <div id="left_col"> 
+ 
+ <div id="headline"> 
+  <p>&#8216;{{year}}.{{month}}.&#8217; Article</p> 
+ 
+ </div> 
+ 
+ <!--/content start-->
+ {% for entry in entries %}
+    <div class="post_{%cycle alt1,alt %}"> 
+     <div class="post clearfix"> 
+      <div class="post_content_wrapper"> 
+       <h2><a href="/{{ entry.link }}">{{ entry.title }}</a></h2> 
+       <div class="post_content"> 
+{{entry.content_excerpt}}       </div> 
+      </div> 
+      <dl class="post_meta"> 
+        <dt class="meta_date">{{ entry.date|datetz:"Y" }}</dt> 
+         <dd class="post_date">{{ entry.date|datetz:"m" }}<span>/{{ entry.date|datetz:"d" }}</span></dd> 
+                <dt>Classification：</dt> 
+         <dd>{%for cate in entry.categories%} <a href="/category/{{cate.slug}}">{{cate.name}}</a> {%endfor%} </dd> 
+		 		 <dt>Label：</dt> 
+		 <dd>
+        {% if entry.strtags %}{%for tag in entry.tags%}<a href="/tag/{{tag|urlencode}}">{{tag}}</a> <br/>{%endfor%}{%endif%} 		
+		 </dd>
+
+                                 <dt class="meta_comment"><a href="/{{entry.link}}#comments">{{entry.commentcount}} Comments</a></dt> 
+         <dd> {%if self.is_admin%}<a class="post-edit-link" href="{{entry.edit_url}}">[ Editor ]</a>  {%endif%} </dd>
+		 </dl> 
+     </div> 
+    </div> 
+  <!--/content end-->
+  	{% endfor %}
+ 
+    <div class="content_noside"> 
+     <div class="page_navi clearfix"> 
+<ul class='page-numbers'> 
+
+	<li>{% if show_prev %}<a class='page-numbers' href="/page/{{ pageindex|add:"-1"}}">{{ pageindex|add:"-1"}}</a>{% endif %}
+	<li><span class='page-numbers current'> {{pageindex}} </span></li> 
+	<li>{% if show_next %}<a class='page-numbers' href="/page/{{ pageindex|add:"1" }}">{{ pageindex|add:"1" }}</a>{% endif %}</li>
+
+</li> 
+</ul> 
+ 
+</div> 
+    </div> 
+ 
+   </div><!-- #left_col end --> 
+   
+   {% else %}
+
+<h2>Not Found</h2>
+<p>Sorry, but you are looking for something that isn't here.</p>
+
+   {% endif %}
+ 
+{% include "sidebar.html" %}
+
+</div>
+ <!-- #contents end -->
+  {% endblock %}
+  

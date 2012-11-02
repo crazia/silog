@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block head_block %}
+	{% if entry %}
+		{%if entry.strtags%}<meta name="Keywords" content="{{entry.strtags}}">{%endif%}
+		{%if entry.excerpt%} <meta name="Description" content="{{entry.excerpt}}">{%endif%}
+	{% endif %}
+{% endblock %}
+
+{%block content%}
+	{%for entry in entries%}
+		<div class="post" id="post-{{ entry.post_id }}">
+			<div class="date">
+				<span>{{entry.date|date:"M"}}</span>
+				{{entry.date|date:"d"}}
+			</div>
+			<div class="title">
+				<h2>
+					<a href="/{{entry.link}}" rel="bookmark" title = "{{entry.title}}">{{entry.title}}</a>
+				</h2>
+				<div class="postdata">
+					<span class="category">
+						{%for cate in entry.categories%} <a href="/category/{{cate.slug}}" rel="category tag">{{cate.name}}</a> {%endfor%}
+					</span>
+					<span class="comments">
+						<a href="/{{entry.link}}#comments">({{entry.commentcount}})</a>
+						{%if self.is_admin%} | <a href="{{entry.edit_url}}" class="alert">Edit</a>
+						{%endif%}
+					</span>
+				</div>
+				
+			</div>
+			
+			<div class="entry">
+				{{entry|excerpt_more:"(..More)"}}
+				<a href="/{{entry.link}}">Read More...</a>
+			</div>
+		</div>
+		
+	{%endfor%}
+	{%include "page-nav.html"%}
+{%endblock%}
